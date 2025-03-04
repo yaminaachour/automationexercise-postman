@@ -1,0 +1,38 @@
+pipeline {
+    agent any
+    
+    environment {
+        // variable d'environnement NODEJS_HOME
+        NODE_HOME = "${env.NODEJS_HOME}"
+        PATH = "${env.NODE_HOME}/bin:${env.PATH}"
+    }
+
+    stages {
+        stage('Cloner le dépôt') {
+            steps {
+                git 'https://github.com/yaminaachour/automationexercise-postman.git'
+            }
+        }
+      stage('Exécuter les tests Postman') {
+            steps {
+                script {
+       // Exécution des tests Newman avec un rapport HTML
+                    sh 'newman run AutomationExercise_API_Testing.postman_collection.json -e AutomationExercise.postman_environment.json -r cli,html --reporter-html-export resultats.html'
+                }
+            }
+        }
+
+        stage('Téléverser les résultats') {
+            steps {
+                archiveArtifacts artifacts: 'resultats.html', allowEmptyArchive: true
+            }
+        }
+    }
+
+    post {
+        always {
+            // Notifications ou nettoyage après l'exécution, si nécessaire
+            echo 'Pipeline terminé.'
+        }
+    }
+}
