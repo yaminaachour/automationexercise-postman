@@ -1,0 +1,928 @@
+{
+	"info": {
+		"_postman_id": "d613705f-c757-456d-a9ca-bb9e1e3da155",
+		"name": "AutomationExercise_API_Testing",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "36644670"
+	},
+	"item": [
+		{
+			"name": "API 1 : Get All Products List",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Vérifier que le statut HTTP est 200\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"// Vérification du code de réponse dans le JSON\r",
+							"pm.test(\"Response code is 200\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.responseCode).to.eql(200);\r",
+							"});\r",
+							"//Vérifie que la réponse n’est pas vide et qu’elle est bien au format JSON.\r",
+							"pm.test(\"Response must have a body\", function () {\r",
+							"     pm.response.to.be.withBody;\r",
+							"     pm.response.to.be.json;\r",
+							"});\r",
+							"//Vérifie que la réponse contient bien les mots-clés \"id\", \"name\", \"price\", \"brand\", \"category\", \"usertype\".\r",
+							"pm.test(\"Body matches string\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"id\");\r",
+							"    pm.expect(pm.response.text()).to.include(\"name\");\r",
+							"    pm.expect(pm.response.text()).to.include(\"price\");\r",
+							"    pm.expect(pm.response.text()).to.include(\"brand\");\r",
+							"    pm.expect(pm.response.text()).to.include(\"category\");\r",
+							"    pm.expect(pm.response.text()).to.include(\"usertype\");});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": "https://automationexercise.com/api/productsList"
+			},
+			"response": []
+		},
+		{
+			"name": "API2: POST To All Products List",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response code is 405\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.responseCode).to.eql(405); // Vérifier le code de réponse dans le JSON\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response must have a body\", function () {\r",
+							"    pm.response.to.have.body; // La syntaxe correcte est `to.have.body`, sans `withBody`\r",
+							"    pm.response.to.be.json; // Vérifier que la réponse est au format JSON\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check response message\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.message).to.eql(\"This request method is not supported.\"); // Vérifier que le message est correct\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": "{{baseUrl}}/api/productsList"
+			},
+			"response": []
+		},
+		{
+			"name": "API 3: Get All Brands List",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Vérifier que le statut HTTP est 200\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"// Vérification du code de réponse dans le JSON\r",
+							"pm.test(\"Response code is 200\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.responseCode).to.eql(200);\r",
+							"});\r",
+							"\r",
+							"// Vérifie que la réponse n’est pas vide et qu’elle est bien au format JSON.\r",
+							"pm.test(\"Response must have a body\", function () {\r",
+							"     pm.response.to.have.body;  // Correcte la syntaxe pour vérifier qu'il y a un corps de réponse\r",
+							"     pm.response.to.be.json;    // Vérifie que la réponse est bien au format JSON\r",
+							"});\r",
+							"\r",
+							"// Vérifie que la réponse contient all brands \r",
+							"pm.test(\"Body matches string\", function () {\r",
+							"       pm.expect(pm.response.text()).to.include(\"brands\");   // Vérifie que la réponse contient \"brands\"\r",
+							"\r",
+							"    pm.expect(pm.response.text()).to.include(\"id\");      // Vérifie que le texte de la réponse contient \"id\"\r",
+							"    pm.expect(pm.response.text()).to.include(\"brand\");   // Vérifie que le texte de la réponse contient \"brand\"\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": "{{baseUrl}}/api/brandsList"
+			},
+			"response": []
+		},
+		{
+			"name": "API 4: PUT To All Brands List",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response code is 405\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.responseCode).to.eql(405); // Vérifier que le code de réponse est 405\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response must have a body\", function () {\r",
+							"    pm.response.to.have.body; // Utilisez `to.have.body` pour vérifier qu'il y a un corps de réponse\r",
+							"    pm.response.to.be.json; // Vérifier que la réponse est au format JSON\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check response message\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.message).to.eql(\"This request method is not supported.\"); // Vérifier le message de la réponse\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/xhtml+xml",
+						"type": "text"
+					}
+				],
+				"url": "{{baseUrl}}/api/brandsList"
+			},
+			"response": []
+		},
+		{
+			"name": "API 5: POST To Search Product",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Vérifie que le statut HTTP de la réponse est bien 200 (OK)\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"// Vérifie que le champ \"responseCode\" dans le JSON de la réponse est 200\r",
+							"pm.test(\"Response code is 200\", function () {\r",
+							"    var jsonData = pm.response.json(); // Convertit la réponse en JSON\r",
+							"    pm.expect(jsonData.responseCode).to.eql(200); // Vérifie que responseCode est égal à 200\r",
+							"});\r",
+							"\r",
+							"// Vérifie que la réponse contient un corps et qu'elle est bien au format JSON\r",
+							"pm.test(\"Response must have a body\", function () {\r",
+							"     pm.response.to.be.withBody; // Vérifie que la réponse contient un body\r",
+							"     pm.response.to.be.json; // Vérifie que la réponse est bien au format JSON\r",
+							"});\r",
+							"\r",
+							"// Vérifie que certains mots-clés sont présents dans le corps de la réponse\r",
+							"pm.test(\"Body matches string\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"products\"); // Vérifie que \"products\" est présent\r",
+							"    pm.expect(pm.response.text()).to.include(\"id\"); // Vérifie que \"id\" est présent\r",
+							"    pm.expect(pm.response.text()).to.include(\"name\"); // Vérifie que \"name\" est présent\r",
+							"    pm.expect(pm.response.text()).to.include(\"price\"); // Vérifie que \"price\" est présent\r",
+							"    pm.expect(pm.response.text()).to.include(\"brand\"); // Vérifie que \"brand\" est présent\r",
+							"    pm.expect(pm.response.text()).to.include(\"category\"); // Vérifie que \"category\" est présent\r",
+							"    pm.expect(pm.response.text()).to.include(\"usertype\"); // Vérifie que \"usertype\" est présent\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "search_product",
+							"value": "tshirt",
+							"type": "text"
+						},
+						{
+							"key": "",
+							"value": "",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/searchProduct",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"searchProduct"
+					],
+					"query": [
+						{
+							"key": "search_product",
+							"value": "tshirt",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "API 6: POST To Search Product without search_product parameter",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Vérifie que le statut HTTP de la réponse est bien 200 (OK)\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"// Vérifie que le champ \"responseCode\" dans le JSON de la réponse est 400\r",
+							"pm.test(\"Response code is 400\", function () {\r",
+							"    var jsonData = pm.response.json(); // Convertit la réponse en JSON\r",
+							"    pm.expect(jsonData.responseCode).to.eql(400); // Vérifie que responseCode est égal à 400\r",
+							"});\r",
+							"\r",
+							"// Vérifie que la réponse contient un corps et qu'elle est bien au format JSON\r",
+							"pm.test(\"Response must have a body\", function () {\r",
+							"     pm.response.to.be.withBody; // Vérifie que la réponse contient un body\r",
+							"     pm.response.to.be.json; // Vérifie que la réponse est bien au format JSON\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check response message\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.message).to.eql(\"Bad request, search_product parameter is missing in POST request.\"); // Vérifier que le message est correct\r",
+							"   \r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": "{{baseUrl}}/api/searchProduct"
+			},
+			"response": []
+		},
+		{
+			"name": "API 7: POST To Verify Login with valid details",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Vérifie que le statut HTTP de la réponse est bien 200 (OK)\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"// Vérifie que le champ \"responseCode\" dans le JSON de la réponse est 200\r",
+							"pm.test(\"Response code is 200\", function () {\r",
+							"    var jsonData = pm.response.json(); // Convertit la réponse en JSON\r",
+							"    pm.expect(jsonData.responseCode).to.eql(200); // Vérifie que responseCode est égal à 200\r",
+							"});\r",
+							"\r",
+							"// Vérifie que la réponse contient un corps et qu'elle est bien au format JSON\r",
+							"pm.test(\"Response must have a body\", function () {\r",
+							"     pm.response.to.be.withBody; // Vérifie que la réponse contient un body\r",
+							"     pm.response.to.be.json; // Vérifie que la réponse est bien au format JSON\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check response message\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.message).to.eql(\"User exists!\"); // Vérifier que le message est correct\r",
+							"   \r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "ty",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "email",
+							"value": "{{validemail}}",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "{{valid-passowrd}}",
+							"type": "text"
+						}
+					]
+				},
+				"url": "{{baseUrl}}/api/verifyLogin"
+			},
+			"response": []
+		},
+		{
+			"name": "API 8: POST To Verify Login without email parameter",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Vérifie que le statut HTTP de la réponse est bien 200 (OK)\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"// Vérifie que le champ \"responseCode\" dans le JSON de la réponse est 400\r",
+							"pm.test(\"Response code is 400\", function () {\r",
+							"    var jsonData = pm.response.json(); // Convertit la réponse en JSON\r",
+							"    pm.expect(jsonData.responseCode).to.eql(400); // Vérifie que responseCode est égal à 400\r",
+							"});\r",
+							"\r",
+							"// Vérifie que la réponse contient un corps et qu'elle est bien au format JSON\r",
+							"pm.test(\"Response must have a body\", function () {\r",
+							"     pm.response.to.be.withBody; // Vérifie que la réponse contient un body\r",
+							"     pm.response.to.be.json; // Vérifie que la réponse est bien au format JSON\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check response message\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.message).to.eql(\"Bad request, email or password parameter is missing in POST request.\"); // Vérifier que le message est correct\r",
+							"   \r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "password",
+							"value": "{{password}}",
+							"type": "text"
+						}
+					]
+				},
+				"url": "{{baseUrl}}/api/verifyLogin"
+			},
+			"response": []
+		},
+		{
+			"name": "API 9: DELETE To Verify Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Vérifie que le statut HTTP de la réponse est bien 200 (OK)\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"// Vérifie que le champ \"responseCode\" dans le JSON de la réponse est 400\r",
+							"pm.test(\"Response code is 405\", function () {\r",
+							"    var jsonData = pm.response.json(); // Convertit la réponse en JSON\r",
+							"    pm.expect(jsonData.responseCode).to.eql(405); // Vérifie que responseCode est égal à 405\r",
+							"});\r",
+							"\r",
+							"// Vérifie que la réponse contient un corps et qu'elle est bien au format JSON\r",
+							"pm.test(\"Response must have a body\", function () {\r",
+							"     pm.response.to.be.withBody; // Vérifie que la réponse contient un body\r",
+							"     pm.response.to.be.json; // Vérifie que la réponse est bien au format JSON\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check response message\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.message).to.eql(\"This request method is not supported.\"); // Vérifier que le message est correct\r",
+							"   \r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": "{{baseUrl}}/api/verifyLogin"
+			},
+			"response": []
+		},
+		{
+			"name": "API 10: POST To Verify Login with invalid details",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Vérifie que le statut HTTP de la réponse est bien 200 (OK)\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"// Vérifie que le champ \"responseCode\" dans le JSON de la réponse est 400\r",
+							"pm.test(\"Response code is 404\", function () {\r",
+							"    var jsonData = pm.response.json(); // Convertit la réponse en JSON\r",
+							"    pm.expect(jsonData.responseCode).to.eql(404); // Vérifie que responseCode est égal à 405\r",
+							"});\r",
+							"\r",
+							"// Vérifie que la réponse contient un corps et qu'elle est bien au format JSON\r",
+							"pm.test(\"Response must have a body\", function () {\r",
+							"     pm.response.to.be.withBody; // Vérifie que la réponse contient un body\r",
+							"     pm.response.to.be.json; // Vérifie que la réponse est bien au format JSON\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check response message\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.message).to.eql(\"User not found!\"); // Vérifier que le message est correct\r",
+							"   \r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "email",
+							"value": "{{invalid_email}}",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "{{invalid_password}}",
+							"type": "text"
+						}
+					]
+				},
+				"url": "{{baseUrl}}/api/verifyLogin"
+			},
+			"response": []
+		},
+		{
+			"name": "API 11: POST To Create/Register User Account",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Vérifie que le statut HTTP de la réponse est bien 200 (OK)\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"// Vérifie que le champ \"responseCode\" dans le JSON de la réponse est 400\r",
+							"pm.test(\"Response code is 201\", function () {\r",
+							"    var jsonData = pm.response.json(); // Convertit la réponse en JSON\r",
+							"    pm.expect(jsonData.responseCode).to.eql(201); // Vérifie que responseCode est égal à 201\r",
+							"});\r",
+							"\r",
+							"// Vérifie que la réponse contient un corps et qu'elle est bien au format JSON\r",
+							"pm.test(\"Response must have a body\", function () {\r",
+							"     pm.response.to.be.withBody; // Vérifie que la réponse contient un body\r",
+							"     pm.response.to.be.json; // Vérifie que la réponse est bien au format JSON\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check response message\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.message).to.eql(\"User created!\"); // Vérifier que le message est correct\r",
+							"   \r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "name",
+							"value": "houda",
+							"type": "text"
+						},
+						{
+							"key": "email",
+							"value": "{{email}}",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "{{password}}",
+							"type": "text"
+						},
+						{
+							"key": "title",
+							"value": "Miss",
+							"type": "text"
+						},
+						{
+							"key": "birth_date",
+							"value": "15",
+							"type": "text"
+						},
+						{
+							"key": "birth_month",
+							"value": "12",
+							"type": "text"
+						},
+						{
+							"key": "birth_year",
+							"value": "1993",
+							"type": "text"
+						},
+						{
+							"key": "firstname",
+							"value": "yamina",
+							"type": "text"
+						},
+						{
+							"key": "lastname",
+							"value": "achour",
+							"type": "text"
+						},
+						{
+							"key": "company",
+							"value": "tammstore",
+							"type": "text"
+						},
+						{
+							"key": "address1",
+							"value": "rur 123",
+							"type": "text"
+						},
+						{
+							"key": "address2",
+							"value": "rue 321",
+							"type": "text"
+						},
+						{
+							"key": "country",
+							"value": "kuwait",
+							"type": "text"
+						},
+						{
+							"key": "zipcode",
+							"value": "6001",
+							"type": "text"
+						},
+						{
+							"key": "state",
+							"value": "Al Asimah",
+							"type": "text"
+						},
+						{
+							"key": "city",
+							"value": "Kuwait City",
+							"type": "text"
+						},
+						{
+							"key": "mobile_number",
+							"value": "+216054872",
+							"type": "text"
+						}
+					]
+				},
+				"url": "{{baseUrl}}/api/createAccount"
+			},
+			"response": []
+		},
+		{
+			"name": "API 12: DELETE METHOD To Delete User Account",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "email",
+							"value": "{{email}}",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "{{password}}",
+							"type": "text"
+						}
+					]
+				},
+				"url": "{{baseUrl}}/api/deleteAccount"
+			},
+			"response": []
+		},
+		{
+			"name": "API 13: PUT METHOD To Update User Account",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Vérifie que le statut HTTP de la réponse est bien 200 (OK)\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"// Vérifie que le champ \"responseCode\" dans le JSON de la réponse est 400\r",
+							"pm.test(\"Response code is 200\", function () {\r",
+							"    var jsonData = pm.response.json(); // Convertit la réponse en JSON\r",
+							"    pm.expect(jsonData.responseCode).to.eql(200); // Vérifie que responseCode est égal à 200\r",
+							"});\r",
+							"\r",
+							"// Vérifie que la réponse contient un corps et qu'elle est bien au format JSON\r",
+							"pm.test(\"Response must have a body\", function () {\r",
+							"     pm.response.to.be.withBody; // Vérifie que la réponse contient un body\r",
+							"     pm.response.to.be.json; // Vérifie que la réponse est bien au format JSON\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check response message\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.message).to.eql(\"User updated!\"); // Vérifier que le message est correct\r",
+							"   \r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "name",
+							"value": "houda",
+							"type": "text"
+						},
+						{
+							"key": "email",
+							"value": "{{validemail}}",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "{{valid-passowrd}}",
+							"type": "text"
+						},
+						{
+							"key": "title",
+							"value": "Miss",
+							"type": "text"
+						},
+						{
+							"key": "birth_date",
+							"value": "12",
+							"type": "text"
+						},
+						{
+							"key": "birth_month",
+							"value": "5",
+							"type": "text"
+						},
+						{
+							"key": "birth_year",
+							"value": "1995",
+							"type": "text"
+						},
+						{
+							"key": "firstname",
+							"value": "yamina",
+							"type": "text"
+						},
+						{
+							"key": "lastname",
+							"value": "ach",
+							"type": "text"
+						},
+						{
+							"key": "company",
+							"value": "xxx",
+							"type": "text"
+						},
+						{
+							"key": "address1",
+							"value": "rue321",
+							"type": "text"
+						},
+						{
+							"key": "address2",
+							"value": "app2",
+							"type": "text"
+						},
+						{
+							"key": "country",
+							"value": "kuwait",
+							"type": "text"
+						},
+						{
+							"key": "zipcode",
+							"value": "6001",
+							"type": "text"
+						},
+						{
+							"key": "state",
+							"value": "yyy",
+							"type": "text"
+						},
+						{
+							"key": "city",
+							"value": "zzz",
+							"type": "text"
+						},
+						{
+							"key": "mobile_number",
+							"value": "+216758522",
+							"type": "text"
+						}
+					]
+				},
+				"url": "{{baseUrl}}/api/updateAccount"
+			},
+			"response": []
+		},
+		{
+			"name": "API 14: GET user account detail by email",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response code is 200\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.responseCode).to.eql(200);\r",
+							"});\r",
+							"pm.test(\"Response must have a body\", function () {\r",
+							"    pm.response.to.be.withBody;\r",
+							"    pm.response.to.be.json;\r",
+							"});\r",
+							"pm.test(\"Response must have a body\", function () {\r",
+							"    pm.response.to.have.body;\r",
+							"    pm.response.to.be.json;\r",
+							"});\r",
+							"pm.test(\"Body matches string\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"user\");\r",
+							"    pm.expect(pm.response.text()).to.include(\"id\");\r",
+							"    pm.expect(pm.response.text()).to.include(\"name\");\r",
+							"    pm.expect(pm.response.text()).to.include(\"email\");\r",
+							"    pm.expect(pm.response.text()).to.include(\"title\");\r",
+							"    pm.expect(pm.response.text()).to.include(\"birth_day\");\r",
+							"    pm.expect(pm.response.text()).to.include(\"birth_month\");\r",
+							"    pm.expect(pm.response.text()).to.include(\"birth_year\");\r",
+							"    pm.expect(pm.response.text()).to.include(\"first_name\");\r",
+							"    pm.expect(pm.response.text()).to.include(\"last_name\");\r",
+							"    pm.expect(pm.response.text()).to.include(\"company\");\r",
+							"    pm.expect(pm.response.text()).to.include(\"address1\");\r",
+							"    pm.expect(pm.response.text()).to.include(\"address2\");\r",
+							"    pm.expect(pm.response.text()).to.include(\"country\");\r",
+							"    pm.expect(pm.response.text()).to.include(\"state\");\r",
+							"    pm.expect(pm.response.text()).to.include(\"city\");\r",
+							"    pm.expect(pm.response.text()).to.include(\"zipcode\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": []
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/getUserDetailByEmail?email={{validemail}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"getUserDetailByEmail"
+					],
+					"query": [
+						{
+							"key": "email",
+							"value": "{{validemail}}"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
